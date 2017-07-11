@@ -482,11 +482,11 @@ conclusion of this work.
 
 \section{Experimental Procedures} \label{sec:exp_proced}
 
-In order to evaluate the different proposed methods, we used the FlatFish AUV (Figure
+In order to evaluate the different proposed methods, we used FlatFish AUV (Figure
 \ref{fig:flatfish_1}) \cite{flatfish_jan} to collect data to be analyzed
 offline. FlatFish is an AUV developed by the Brazilian Institute of Robotics
 and the Robotics Innovation Center as part of the FlatFish project, a project
-founded by Shell which aims to develop an AUV for inspection assets of O\&G industry.
+founded by Shell which aims to develop an AUV for inspection of assets from O\&G industry.
 
 \begin{figure}[!ht]
     \centering
@@ -513,9 +513,9 @@ The experiments were conducted in the Todos os Santos Bay, located in the city
 of Salvador-BA, part of the Brazilian coast. A marker attached to an iron
 pedestal was deployed in shallow waters, 20 meters deep. The vehicle was
 placed in front of the marker, changing its marker-relative pose in terms of
-position and orientation. At the end, one hour video containing 32613 was
+position and orientation. At the end, one hour video containing 32613 frames was
 acquired for posteriori analysis. Apriltags marker system was chosen due
-to have presented the best performance among the open-source libraries
+to having presented the best performance among the open-source libraries
 \cite{diego}.  Figure \ref{fig:apriltag_pedestal} shows the detection of
 Apriltags in the ocean.
 
@@ -526,30 +526,30 @@ Apriltags in the ocean.
     \label{fig:apriltags_ocean}
 \end{figure}
 
-The experiment consists in perform the pre-processing algorithms under the
-whole video and comparing which one of the methods give the higher detection
-rate. Since the detected frames will feed a visual controller, the time for
-detection is also relevant factor. Therefore, we also will downscale images and
-observe how this will affect the processing time. Acquired image resolution is
-2040x2040 and in this work was scaled by the following factors: 0.5 0.4 0.3 0.2
+The experiment consisted in performing the pre-processing algorithms on the
+entire video and comparing which one of the methods gave the highest detection
+rate. Since the detected frames feed a visual controller, the time for
+detection is also a relevant factor. Therefore, we also downscaled images and
+observed how this affected the processing time. Acquired image resolution was
+2040x2040 and in this work it was scaled by the following factors: 0.5 0.4 0.3 0.2
 0.1 0.05.
 
 \subsection{Methods}
 
-The pre-processing algorithms in which the raw image is submitted is here described. 
+The pre-processing algorithms in which the raw image was submitted is here described. 
 
 The first approach, namely Method 1, converts the raw image to grayscale
-before send it to the Apriltag detector.  Method 2 adds a stage of
-normalization as a simple contrast stretching stage.  Method 3 is similar to
-Method 2, however it uses contrast limited adaptive histogram equalization (CLAHE)
+before sending it to the Apriltag detector. Method 2 adds a stage of
+normalization as a simple contrast stretching stage. Method 3 is similar to
+Method 2, although it uses contrast limited adaptive histogram equalization (CLAHE)
 \cite{zuiderveld1994contrast} to improve the contrast of the grayscale image.
 Method 4 is based on the method proposed by Iqbal \cite{iqbal2007underwater},
-differences are that we use HSV instead of HSI and the contrast stretching was
-also performed locally  using CLAHE, in opposite to the method proposed by
-them.
+with the differences that we used HSV instead of HSI and the contrast stretching was
+also performed locally using CLAHE, as opposed to the method proposed by
+the authors.
 
 Figure \ref{fig:methods_flow} shows a diagram with the pre-processing stages
-applied to the raw image before it be processed by the marker detector, for each
+applied to the raw image before it was processed by the marker detector, for each
 method. 
 
 \begin{figure}[!htpb]
@@ -565,8 +565,7 @@ method.
 On a different day, in order to evaluate the improvement of a visual servoing
 task, the vehicle was submitted to a visual servoing under both conditions:
 mission with the pre-processing layer and mission without any pre-processing,
-and performance of both missions are compared.
-
+and performance of both missions were then compared.
 
 \section{Results and Discussion} \label{sec:results}
 
