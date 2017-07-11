@@ -386,10 +386,10 @@ Underwater image formation is degraded by several factors, which causes the
     Therefore, three different methods for imaging enhancing were applied to the
     raw image aiming to increase the detection rate of the marker detector.
     Since the performance of the visual controller also depends on the
-    detection time, this variable was also considered in the comparison.
+    detection time, this was also considered in the comparison.
     Finally, the algorithm that caused the best improvement in marker
     detection was tested in a visual servoing mission. The proposed methods
-    have shown a significantly improvement in the marker detection rates at
+    have shown a significantly improvement in the marker detection rates and
     reasonable detection times for visual servoing of autonomous underwater
     vehicles. In terms of visual servoing missions, this work shows that the
     proposed methods not only increased the controller frequency, but also made
@@ -419,15 +419,18 @@ Underwater image formation is degraded by several factors, which causes the
 Underwater image analysis is useful for many applications, such as:
 inspection of man-made structures, observation of marine fauna, monitoring,
 seabed studies \cite{Aulinas2011}. Nonetheless, unlike normal images taken in
-the air, the physical characteristics of the water medium causes underwater
-images to be usually affected by limited range visibility, low contrast, non
+the air, the physical characteristics of water causes underwater
+images to be usually affected by limited visibility, low contrast, non
 uniform lighting, blurring, bright artifacts, and noise \cite{Yang2012}.
 
-Light attenuation in water is caused by light absorption and light
+Light attenuation in water is caused by absorption and
 scattering. The former reduces the energy of light while the latter changes the
-direction of the light. It directly affects light visibility, which can vary
+direction of the light. It directly affects visibility, that is the range at
+which objects can be seen, which can vary
 from twenty up to five meters or even less \cite{Schettini2010}. Light
 attenuation is not caused only by light propagation in the water medium, but
+%% SJ: "dissolved particles" does not mean anything. A particle is always
+%% SJ: floating. A compound such as salt can "dissolve"
 also due to dissolved and floating particles in the water. These
 interactions increase absorption and scattering effects.
 
@@ -436,23 +439,23 @@ comprehensible to humans and even for machines, since it would permit the use
 of standard image processing algorithms \cite{Schettini2010} \cite{sankpal2016nonuniform} \cite{rodrigues2016enhancement} \cite{bazeille2006automatic}
 \cite{arnold2005preprocessing} \cite{chiang2012underwater} \cite{iqbal2007underwater}.
 
-One of the multiple interests in improving underwater image quality is
+One interesting application of improving underwater image quality is
 feature extraction for visual servoing. Visual servoing or vision-based
 control is a control scheme that uses visual information to control the motion
 of a robot. It is a multidisciplinary field that covers the knowledge of areas
 such as kinematics, dynamics, image processing and control theory
 \cite{Hutchinson1996}. Visual servoing mimics the way that humans use their
 visual system to perform simple actions such as grabbing objects, positioning
-the body to enter through a door or seating on a chair. On underwater robots,
+the body to enter through a door or seating on a chair. In underwater robots,
 visual servoing can be useful for performing tasks such as docking
 \cite{Lee2003}, pipeline following \cite{Rives1997} and structure inspection
 \cite{KRUPINSKI2015274}. Moreover, underwater visual servoing has been used
 for aiding robot inspection and 3D reconstruction \cite{4302315}, assisting
 ROV pilots \cite{4099090} and valves manipulation \cite{1282820}.
 
-As visual servoing relies on the feature extraction, this work will take
-advantage of the artificial fiducial markers. They are patterns that encode
-unique ID and are especially designed to be easily detected by computer vision
+Visual servoing relies on some form of feature extraction. This work will use
+artificial fiducial markers: patterns that encode
+unique IDs and are especially designed to be easily detected by computer vision
 systems. In Figure \ref{fig:marker_systems} some fiducial marker systems are
 shown.
 
@@ -470,11 +473,11 @@ reliability and when the environment can be modified to affix them \cite{Fiala20
 
 This paper quantitatively compares three different approaches for underwater
 image enhancement, taking in account the marker detection rate and processing
-time. It shows how the use of an image pre-processing layer can significantly
+time. It demonstrates that the use of an image pre-processing layer can significantly
 increase the detection rate of the marker detector, improving the performance
-of a vehicle servoing in front of a marker.
+of the vehicle servoing loop.
 
-The document is divided in Section \ref{sec:int}, which shows the state of the art
+This article is divided in Section \ref{sec:int}, which shows the state of the art
 and the paper goal, Section \ref{sec:exp_proced} shows the experimental
 procedures and details the applied methods, Section \ref{sec:results} shows the
 achieved results and discusses them and Section \ref{sec:concl} presents the
@@ -499,8 +502,8 @@ In the context of this work, it is important to mention that FlatFish is
 equipped with four cameras Basler acA2040-gc25, able to capture up to 25 frames
 per second with 2040 x 2040 resolution. The actuation system is composed of 6
 thrusters disposed according to Figure \ref{fig:thrusters_configuration}. This
-configuration controls 4 degrees of freedom, where roll and pitch are passively
-controlled. 
+configuration controls 4 degrees of freedom. The vehicle is passively stable
+in pitch and roll.
 
 \begin{figure}[!ht]
     \centering
@@ -514,10 +517,10 @@ of Salvador-BA, part of the Brazilian coast. A marker attached to an iron
 pedestal was deployed in shallow waters, 20 meters deep. The vehicle was
 placed in front of the marker, changing its marker-relative pose in terms of
 position and orientation. At the end, one hour video containing 32613 frames was
-acquired for posteriori analysis. Apriltags marker system was chosen due
+acquired for a-posteriori analysis. The apriltags marker system was chosen due
 to having presented the best performance among the open-source libraries
-\cite{diego}.  Figure \ref{fig:apriltag_pedestal} shows the detection of
-Apriltags in the ocean.
+\cite{diego}.  Figure \ref{fig:apriltag_pedestal} shows an example of apriltag marker detection
+in the ocean.
 
 \begin{figure}[!htpb]
 	\centering
@@ -526,19 +529,19 @@ Apriltags in the ocean.
     \label{fig:apriltags_ocean}
 \end{figure}
 
-The experiment consisted in performing the pre-processing algorithms on the
+The pre-processing algorithm evaluation was done by running them on the
 entire video and comparing which one of the methods gave the highest detection
-rate. Since the detected frames feed a visual controller, the time for
-detection is also a relevant factor. Therefore, we also downscaled images and
+rate. Since the detected frames are used as feedback in a control loop, the
+detection times are also relevant. Therefore, we also downscaled images and
 observed how this affected the processing time. Acquired image resolution was
 2040x2040 and in this work it was scaled by the following factors: 0.5, 0.4, 0.3, 0.2,
 0.1 and 0.05.
 
 \subsection{Methods}
 
-The pre-processing algorithms in which the raw image was submitted is here described. 
+We will now describe the evaluated pre-processing algorithms 
 
-The first approach, namely Method 1, converts the raw image to grayscale
+Method 1 converts the raw image to grayscale
 before sending it to the Apriltag detector. Method 2 adds a stage of
 normalization as a simple contrast stretching stage. Method 3 is similar to
 Method 2, although it uses contrast limited adaptive histogram equalization (CLAHE)
@@ -548,9 +551,11 @@ with the differences that we used HSV instead of HSI and the contrast stretching
 also performed locally using CLAHE, as opposed to the method proposed by
 the authors.
 
-Figure \ref{fig:methods_flow} shows a diagram with the pre-processing stages
-applied to the raw image before it was processed by the marker detector, for each
-method. 
+Figure \ref{fig:methods_flow} shows a diagram with the different processing
+pipelines, from the camera to the marker detector.
+
+%% SJ: you must put the hardware used for performance comparison (type of CPU,
+%% SJ: frequency, amount of memory, ...
 
 \begin{figure}[!htpb]
     \centering
@@ -562,15 +567,18 @@ method.
 
 \subsection{Visual Servoing}
 
-On a different day, in order to evaluate the improvement of a visual servoing
-task, the vehicle was submitted to a visual servoing under both conditions:
-mission with the pre-processing layer and mission without any pre-processing,
-and performance of both missions were then compared.
+In order to evaluate the improvement to the overall visual servoing
+task, we compared how the vehicle behaved in a visual servoing mission with and
+without pre-processing. The performance of both setups were then compared.
 
 \section{Results and Discussion} \label{sec:results}
 
 The results of the marker detector running through a camera log file with 32613
-frames are here shown. It is important to remark that not all the frames
+frames are shown here. It is important to note that not all the frames
+%% SJ: So what are the detection rates ? Are they over the whole stream,
+%% SJ: or only the images with markers ? The latter would IMO be better. In any
+%% SJ: case, you really should put an idea of the ratio between "images with
+%% SJ: markers" and "images without markers"
 contained a visible marker. Figure \ref{fig:detection_rate} shows the detection
 rate of the markers under different pre-processing algorithms and with
 different image scales. 
@@ -578,17 +586,21 @@ different image scales.
 \begin{figure}[!ht]
 	\centering
     \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_rate_emb.pdf}
+    %% SJ: THese are not detection rates, they are a number of frames with detected
+    %% SJ: marker
+    %%
+    %% SJ: and ... error bars. Oh my god. Error bars !
     \caption{Relation between detection rate, pre-processing method and image size.}
 	\label{fig:detection_rate}
 \end{figure}
 
-From Figure \ref{fig:detection_rate}, one can see that the frames without any
-pre-processing increases the detection rate as long as the image size is bigger.
+From Figure \ref{fig:detection_rate}, one can see that the image size
+significantly affects detection without any pre-processing.
 The normalized image does not show significant change when compared to the
-baseline. This behavior is similar for all image resolutions.
+baseline, regardless of the image resolution.
 
 On the other hand, it is possible to see on the graph that both Method 3 and
-Method 4 surpass the firsts two. In addition, Method 4 presents better performance
+Method 4 are noticeable improvements over the firsts two. In addition, Method 4 presents better performance
 than Method 3. Interestingly, neither of these two methods showed dependency to
 the scales as much as Methods 1 and 2. Both methods detect more than
 20000 frames for all sizes, while the Methods 1 and 2 only achieved this at
@@ -604,16 +616,21 @@ the studied methods.
     \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_time_emb.pdf}
     \caption{Relation between average processing time, pre-processing method and image size.}
 	\label{fig:processing_time}
+    %% SJ: Error bars. Oh my god. Error bars !
 \end{figure}
+
+%% SJ: detection times are in what unit ?????
 
 As expected, processing time increases with image size. Since Method 1
 does not have a pre-processing stage, it has the fastest detection time. Method
 2 is the second fastest, followed by Method 3 and Method 4, respectively. 
 
-In terms of detection rate, it is possible to see that Methods 3 and 4
-surmount Methods 1 and 2.  A closer look on these methods gives us Table
-\ref{tab:meth_comp}, which compares Methods 3 and 4.
+However, given that Method 1 and 2 need much bigger images to achieve
+detection rates comparable to Methods 3 and 4, Methods 3 and 4
+are clear winners in practice. Methods 3 and 4 detection rates vs. processing
+times are detailed on \ref{tab:meth_comp}.
 
+%% SJ: Standard deviations !!!!!!!
 \begin{table}[]
 \centering
 \caption{Detection rate and time of Method 4 relatively to Method 3}
@@ -637,7 +654,16 @@ At this scale factor, Method 4 improves the detection rate in 6.45\%, but it
 comes with the cost of an increase of 33.44\% in average detection time. Thus,
 we prefer to use Method 3 instead of Method 4.
 
+%% SJ: this is the only subsection in this section. Create one for the first
+%% SJ: part ?
 \subsection{Visual servoing performance}
+
+%% SJ: honestly, I would have rewritten the whole as "test of pre-processing
+%% SJ: method", mentioning in the test that the initial goal was a comparison
+%% SJ: but that the detector without preprocessing just didn't detect anything
+%% SJ: on that day
+%%
+%% SJ: the current text sounds a bit silly.
 
 The vehicle was moved to the front of the marker and waited for a stable
 detection before starting the visual servoing task. However, due to the poor
@@ -646,6 +672,10 @@ which invalidated the visual servoing without any pre-processing. After it was
 able to apply Method 3, the marker detection started and allowed a visual
 servoing mission. The results of the visual servoing are shown in Figures
 \ref{fig:vs_surge} to \ref{fig:vs_yaw}.
+
+%% SJ: Same scale on both detectors ? If yes, I find that a bit ... weak. you
+%% SJ: Given that the performance of the "no preprocessing" detector degrades
+%% SJ: a lot less with scale, you could have used a much bigger image.
 
 This clearly shows the improvement caused by image treatment before
 running the visual servoing mission. In that case, specifically, the visual
@@ -678,8 +708,8 @@ from a state of no-operation to a regular mission.
 	\label{fig:vs_yaw}
 \end{figure}
 
-Later, the methods were once again applied to a log data. The results are shown
-in Figures \ref{fig:detection_rate2} and \ref{fig:detection_time2}. It shows
+Later, the methods were once again applied to the gathered log data. The results are shown
+on Figures \ref{fig:detection_rate2} and \ref{fig:detection_time2}. It confirms
 the inability of the marker detector to detect markers with Method 1 and
 Method 2. On the other hand, Methods 3 and 4 were able to detect most of the
 8956 frames contained in the log file. 
@@ -708,18 +738,18 @@ servoing task, the time for detection was also observed.
 
 The results showed that simply applying a local contrast enhancement on the
 image increases significantly the detection rate. A method based on Iqbal's
-paper was also applied. Although the Iqbal's based-method increased the
-detection rate, the processing time increased in a higher proportion, which
-meant that it was not the preferable method for visual servoing, when compared to
+paper was also tested. Although the Iqbal's based-method increased the
+detection rate, the corresponding on processing time was significant.
+This ruled it out for visual servoing purposes when compared to
 Method 3.
 
-We have as well seen that, due to underwater image quality, the marker
-detector was not able to feed the visual controller using raw image. On the
-other hand, using Method 3 the marker detector found several images and
-performed visual servoing normally. This result shows the proposed methods not
+During our experiements, due to underwater image quality, the marker
+detector was unable to function on raw images, while Method 3
+found several images and
+performed visual servoing nominally. This result shows the proposed methods not
 only increased the visual controller frequency, by improving the
 detection rate, but also made visual servoing possible when image
-quality was not favorable.
+quality is not favorable.
 
 % use section* for acknowledgment
 \section*{Acknowledgment}
