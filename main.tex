@@ -584,18 +584,18 @@ different image scales.
 
 From Figure \ref{fig:detection_rate}, one can see that the frames without any
 pre-processing increases the detection rate as long as the image size is bigger.
-The normalized image, does not show significantly change when compared to the
+The normalized image does not show significant change when compared to the
 baseline. This behavior is similar for all image resolutions.
 
 On the other hand, it is possible to see on the graph that both Method 3 and
-Method 4 overcome the firsts two. The Method 4 presents better performance
-than the Method 3. Interestingly, both methods also did not show dependency to
-the scales as strong as the Method 1 and 2. Both methods detects more than
+Method 4 surpass the firsts two. In addition, Method 4 presents better performance
+than Method 3. Interestingly, neither of these two methods showed dependency to
+the scales as much as Methods 1 and 2. Both methods detect more than
 20000 frames for all sizes, while the Methods 1 and 2 only achieved this at
 full image. 
 
 As already mentioned, the detection rate is not the only important factor since
-visual servoing missions also are affected by the detection time. Thus, Figure
+visual servoing missions are also affected by detection time. Thus, Figure
 \ref{fig:processing_time} shows the required processing time for detection of
 the studied methods.
 
@@ -606,14 +606,13 @@ the studied methods.
 	\label{fig:processing_time}
 \end{figure}
 
-As expected, processing time increases with the image size.  Since the Method 1
-does not have any pre-processing stage, it has the faster detection time. The
-Method 2 is the second faster, followed by the Method 3 and Method 4,
-respectively. 
+As expected, processing time increases with image size. Since Method 1
+does not have a pre-processing stage, it has the fastest detection time. Method
+2 is the second fastest, followed by Method 3 and Method 4, respectively. 
 
-In terms of detection rate, it is possible to see that Method 3 and Method 4
-surmount the Methods 1 and 2.  A closer look on these methods give us Table
-\ref{tab:meth_comp}, which compares relatively methods 3 and 4.
+In terms of detection rate, it is possible to see that Methods 3 and 4
+surmount Methods 1 and 2.  A closer look on these methods gives us Table
+\ref{tab:meth_comp}, which compares Methods 3 and 4.
 
 \begin{table}[]
 \centering
@@ -628,28 +627,27 @@ surmount the Methods 1 and 2.  A closer look on these methods give us Table
 \end{tabular}
 \end{table}
 
-Images with small resolution affects the pose estimation accuracy. Thus, we
-will take the bigger resolution in which we have a reasonable time for the
-visual servoing task for comparison. On that case we decided to use the scale
+Images with small resolution affect pose estimation accuracy. Thus, we
+will use the highest resolution in which we have a reasonable time for the
+visual servoing task for comparison purposes. In this case, we decided to use the scale
 factor of 0.4, which causes the image resolution to be 816x816 and feed the
 visual controller at 6.25Hz.
 
-At this scale factor, the Method 4 improves the detection rate of 6.45\% in
-terms of detection rate, but it comes with the cost of an increase of 33.44\%
-in the average detection time. Thus, we will prefer to use Method 3 instead of
-Method 4.
+At this scale factor, Method 4 improves the detection rate in 6.45\%, but it
+comes with the cost of an increase of 33.44\% in average detection time. Thus,
+we prefer to use Method 3 instead of Method 4.
 
 \subsection{Visual servoing performance}
 
 The vehicle was moved to the front of the marker and waited for a stable
-detection before starts the visual servoing task.  However, due to the poor
+detection before starting the visual servoing task. However, due to the poor
 visibility on the day, the Apriltags marker was not able to detect any marker,
-which invalidated the visual servoing without any pre-processing.  After enable
-applying Method 3, the marker detection started and allowed a visual servoing
-mission.  The results of the visual servoing are shown in Figures
+which invalidated the visual servoing without any pre-processing. After it was
+able to apply Method 3, the marker detection started and allowed a visual
+servoing mission. The results of the visual servoing are shown in Figures
 \ref{fig:vs_surge} to \ref{fig:vs_yaw}.
 
-This clearly show the improvement caused by the treatment of the image before
+This clearly shows the improvement caused by image treatment before
 running the visual servoing mission. In that case, specifically, the visual
 servoing was not be possible by using only the grayscale image. So it improved
 from a state of no-operation to a regular mission.
@@ -680,9 +678,9 @@ from a state of no-operation to a regular mission.
 	\label{fig:vs_yaw}
 \end{figure}
 
-Lately, the methods was once again applied to a log data. The results are shown
+Later, the methods were once again applied to a log data. The results are shown
 in Figures \ref{fig:detection_rate2} and \ref{fig:detection_time2}. It shows
-the inability of the marker detector to detect markers under Method 1 and
+the inability of the marker detector to detect markers with Method 1 and
 Method 2. On the other hand, Methods 3 and 4 were able to detect most of the
 8956 frames contained in the log file. 
 
