@@ -51,7 +51,7 @@
 
 
 
-\documentclass[conference]{IEEEtran}
+\documentclass[conference, letterpaper]{IEEEtran}
 % Some Computer Society conferences also require the compsoc mode option,
 % but others use the standard conference format.
 %
@@ -92,7 +92,7 @@
 
 % *** CITATION PACKAGES ***
 %
-%\usepackage{cite}
+\usepackage{cite}
 % cite.sty was written by Donald Arseneau
 % V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
 % \cite{} output to follow that of the IEEE. Loading the cite package will
@@ -116,12 +116,12 @@
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+  \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
-  % \graphicspath{{../pdf/}{../jpeg/}}
+  \graphicspath{{../fig/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+  \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
 \else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
@@ -311,6 +311,7 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+\usepackage[utf8]{inputenc}
 
 \begin{document}
 %
@@ -320,29 +321,25 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Bare Demo of IEEEtran.cls\\ for IEEE Conferences}
+\title{Improvement of Visual Servoing Tasks by Underwater Image Enhancement}
 
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Michael Shell}
-\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
-Georgia Institute of Technology\\
-Atlanta, Georgia 30332--0250\\
-Email: http://www.michaelshell.org/contact.html}
-\and
-\IEEEauthorblockN{Homer Simpson}
-\IEEEauthorblockA{Twentieth Century Fox\\
-Springfield, USA\\
-Email: homer@thesimpsons.com}
-\and
-\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
-\IEEEauthorblockA{Starfleet Academy\\
-San Francisco, California 96678--2391\\
-Telephone: (800) 555--1212\\
-Fax: (888) 555--1212}}
-
+\author{
+    \IEEEauthorblockN{
+    Diego Cesar\IEEEauthorrefmark{1},
+    Sylvain Joyeux\IEEEauthorrefmark{1},
+    Marco Reis\IEEEauthorrefmark{1},
+    André Conceição\IEEEauthorrefmark{2},
+    Jan Albiez\IEEEauthorrefmark{1}
+    }
+	\IEEEauthorblockA{\IEEEauthorrefmark{1}Brazilian Institute of Robotics, SENAI 
+	CIMATEC, Salvador, Bahia, Brazil}
+	\IEEEauthorblockA{\IEEEauthorrefmark{2}Electrical Engineering Department,, UFBA, 
+    Salvador, Bahia, Brazil \\ Email: diego.cesar@fieb.org.br}
+}
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
 % the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
@@ -380,7 +377,25 @@ Fax: (888) 555--1212}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-The abstract goes here.
+
+Underwater image formation is degraded by several factors, which causes the
+    ocean to be a challenging environment for image processing. This paper aims
+    to improve the visual servoing capability of an autonomous underwater
+    vehicle, but using pre-processing algorithms to improve the image quality.
+    We will use artificial fiducial markers to feed the visual controller.
+    Therefore, three different methods for imaging enhancing are applied to the
+    raw image aiming to increase the detection rate of the marker detector.
+    Since the performance of the visual controller also depends on the
+    detection time, this variable is also considered for the comparison.
+    Finally, the algorithm which caused the best improvement in the marker
+    detection is tested in a visual servoing mission.  The proposed methods
+    have shown a significantly improvement in the marker detection rates at
+    reasonable detection times for visual servoing of autonomous underwater
+    vehicles.  In terms of visual servoing missions, this work shows that the
+    proposed methods not only increase the controller frequency, but also makes
+    visual servoing possible when water condition is not favorable and no
+    marker can be detected without any pre-processing layer. 
+
 \end{abstract}
 
 % no keywords
@@ -396,146 +411,329 @@ The abstract goes here.
 %
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
-\IEEEpeerreviewmaketitle
+%\IEEEpeerreviewmaketitle
 
 
 
-\section{Introduction}
-% no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.8b and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
+\section{Introduction}\label{sec:int}
 
-\hfill mds
- 
-\hfill August 26, 2015
+Underwater image analysis is useful for many applications, such as:
+inspection of man-made structures, observation of marine fauna, monitoring,
+seabed studies \cite{Aulinas2011}. Nonetheless, unlike normal images taken in
+the air, physical characteristics of the water medium causes the underwater
+images to be usually affected by limited range visibility, low contrast, non
+uniform lighting, blurring, bright artifacts, and noise \cite{Yang2012}.
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+Light attenuation in the water is caused by light absorption and light
+scattering. The former reduces the energy of light while the latter changes the
+direction of the light. It directly affects light visibility, which can vary
+from twenty up to five meters or even less \cite{Schettini2010}. Light
+attenuation is not caused only by light propagation in the water medium, but
+also due to dissolved particles and the floating particles in the water. These
+interactions increase absorption and scattering effects.
 
+Thus, several works have been published aiming to turn underwater images more
+comprehensible to humans and even for machines, since it would permit the use
+of standard image processing algorithms \cite{Schettini2010,
+sankpal2016nonuniform, rodrigues2016enhancement, bazeille2006automatic,
+arnold2005preprocessing, chiang2012underwater, iqbal2007underwater}.
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+One of the multiple interests in improve the underwater image quality is
+feature extraction for visual servoing.  Visual servoing or vision-based
+control is a control scheme that uses visual information to control the motion
+of a robot. It is a multidisciplinary field that covers the knowledge of areas
+such as kinematics, dynamics, image processing and control theory
+\cite{Hutchinson1996}. Visual servoing mimics the way that humans use their
+visual system to perform simple actions such as grabbing objects, positioning
+the body to enter through a door or seating on a chair. On underwater robots,
+visual servoing can be useful for performing tasks such as docking
+\cite{Lee2003}, pipeline following \cite{Rives1997} and structure inspection
+\cite{KRUPINSKI2015274}.  Moreover, underwater visual servoing has been used
+for helping robot inspection and 3D reconstruction \cite{4302315}, assisting
+ROV pilots \cite{4099090} and valves manipulation \cite{1282820}.
 
+As visual servoing relies on the feature extraction, this work will take
+advantage of the artificial fiducial markers. They are patterns that encode
+unique ID and are especially designed to be easily detected by computer vision
+systems. In Figure \ref{fig:marker_systems} some fiducial marker systems are
+shown.
 
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.40\textwidth]{./fig/marker_systems.png}
+    \caption[Different marker systems]{Different marker systems \cite{Fiala2010}.}
+	\label{fig:marker_systems}
+\end{figure}
 
-% Note that the IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
+Given these characteristics, artificial fiducial markers have high detection
+and low false-positive and false-negative rates. The use of fiducial markers is
+suitable when object recognition or pose determination is needed with high
+reliability and when the environment can be modified to affix them \cite{Fiala2010}. 
 
+This paper quantitatively compares three different approaches for underwater
+image enhancement, taking in account the marker detection rate and processing
+time. It shows how the use of a image pre-processing layer can significantly
+increase the detection rate of the marker detector, improving the performance
+of a vehicle servoing in front of a marker.
 
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
-% labels, the optional argument to \subfloat must be present. If a
-% subcaption is not desired, just leave its contents blank,
-% e.g., \subfloat[].
+The document is divided in Section \ref{sec:int}, which shows the state of art
+and the paper goal, Section \ref{sec:exp_proced} shows the experimental
+procedures and details the applied methods, Section \ref{sec:results} shows the
+achieved results and discuss them and Section \ref{sec:concl} presents the
+conclusion of this work. 
 
 
-% An example of a floating table. Note that, for IEEE style tables, the
-% \caption command should come BEFORE the table and, given that table
-% captions serve much like titles, are usually capitalized except for words
-% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
-% and up, which are usually not capitalized unless they are the first or
-% last word of the caption. Table text will default to \footnotesize as
-% the IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
+\section{Experimental Procedures} \label{sec:exp_proced}
+
+In order to evaluate the different proposed methods, we used the FlatFish AUV (Figure
+\ref{fig:flatfish_1}) \cite{flatfish_jan} to collect data to be analyzed
+offline. FlatFish is an AUV developed by the Brazilian Institute of Robotics
+and the Robotics Innovation Center as part of the FlatFish project, a project
+founded by Shell which aims to develop an AUV for inspection assets of O\&G industry.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.45\textwidth]{./fig/20160317-FF-Test-P1040442.jpg}
+    \caption{FlatFish AUV.}
+    \label{fig:flatfish_1}
+\end{figure}
+
+In the context of this work, it is important to mention that FlatFish is
+equipped with four cameras Basler acA2040-gc25, able to capture up to 25 frames
+per second with 2040 x 2040 resolution. The actuation system is composed of 6
+thrusters disposed according to Figure \ref{fig:thrusters_configuration}. This
+configuration controls 4 degrees of freedom, where roll and pitch are passively
+controlled. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.45\textwidth]{./fig/thrust_configuration.png}
+    \caption{FlatFish thruster configuration \cite{saback2016}.}
+    \label{fig:thrusters_configuration}
+\end{figure}
+
+The experiments were conducted in the Todos os Santos Bay, located in the city
+of Salvador-BA, part of the Brazilian coast. A marker attached to an iron
+pedestal was deployed in shallow waters, 20 meters deep. The vehicle was
+placed in front of the marker, changing its marker-relative pose in terms of
+position and orientation. At the end, one hour video containing 32613 was
+acquired for posteriori analysis. Apriltags marker system was chosen due
+to have presented the best performance among the open-source libraries
+\cite{diego}.  Figure \ref{fig:apriltag_pedestal} shows the detection of
+Apriltags in the ocean.
+
+\begin{figure}[!htpb]
+	\centering
+	\includegraphics[width=0.45\textwidth]{./fig/april_ocean3.png}
+    \caption{Vehicle's camera detecting the Apriltag marker.}
+    \label{fig:apriltags_ocean}
+\end{figure}
+
+The experiment consists in perform the pre-processing algorithms under the
+whole video and comparing which one of the methods give the higher detection
+rate. Since the detected frames will feed a visual controller, the time for
+detection is also relevant factor. Therefore, we also will downscale images and
+observe how this will affect the processing time. Acquired image resolution is
+2040x2040 and in this work was scaled by the following factors: 0.5 0.4 0.3 0.2
+0.1 0.05.
+
+\subsection{Methods}
+
+The pre-processing algorithms in which the raw image is submitted is here described. 
+
+The first approach, namely Method 1, converts the raw image to grayscale
+before send it to the Apriltag detector.  Method 2 adds a stage of
+normalization as a simple contrast stretching stage.  Method 3 is similar to
+Method 2, however it uses contrast limited adaptive histogram equalization (CLAHE)
+\cite{zuiderveld1994contrast} to improve the contrast of the grayscale image.
+Method 4 is based on the method proposed by Iqbal \cite{iqbal2007underwater},
+differences are that we use HSV instead of HSI and the contrast stretching was
+also performed locally  using CLAHE, in opposite to the method proposed by
+them.
+
+Figure \ref{fig:methods_flow} shows a diagram with the pre-processing stages
+applied to the raw image before it be processed by the marker detector, for each
+method. 
+
+\begin{figure}[!htpb]
+    \centering
+    \includegraphics[width=0.49\textwidth]{./fig/processing_flow2.png}
+    \caption{Data flow for each method.}
+    \label{fig:methods_flow}
+\end{figure}
 
 
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
+\subsection{Visual Servoing}
+
+On a different day, in order to evaluate the improvement of a visual servoing
+task, the vehicle was submitted to a visual servoing under both conditions:
+mission with the pre-processing layer and mission without any pre-processing,
+and performance of both missions are compared.
 
 
+\section{Results and Discussion} \label{sec:results}
 
+The results of the marker detector running through a camera log file with 32613
+frames are here shown. It is important to remark that not all the frames
+contained a visible marker. Figure \ref{fig:detection_rate} shows the detection
+rate of the markers under different pre-processing algorithms and with
+different image scales. 
 
-\section{Conclusion}
-The conclusion goes here.
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_rate.pdf}
+    \caption{Relation between detection rate, pre-processing method and image size}
+	\label{fig:detection_rate}
+\end{figure}
 
+From Figure \ref{fig:detection_rate}, one can see that the frames without any
+pre-processing increases the detection rate as long as the image size is bigger.
+The normalized image, does not show significantly change when compared to the
+baseline. This behavior is similar for all image resolutions.
 
+On the other hand, it is possible to see on the graph that both Method 3 and
+Method 4 overcome the firsts two. The Method 4 presents better performance
+than the Method 3. Interestingly, both methods also did not show dependency to
+the scales as strong as the Method 1 and 2. Both methods detects more than
+20000 frames for all sizes, while the Methods 1 and 2 only achieved this at
+full image. 
 
+As already mentioned, the detection rate is not the only important factor since
+visual servoing missions also are affected by the detection time. Thus, Figure
+\ref{fig:processing_time} shows the required processing time for detection of
+the studied methods.
 
-% conference papers do not normally have an appendix
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_time.pdf}
+    \caption{Relation between average processing time, pre-processing method and image size}
+	\label{fig:processing_time}
+\end{figure}
 
+As expected, processing time increases with the image size.  Since the Method 1
+does not have any pre-processing stage, it has the faster detection time. The
+Method 2 is the second faster, followed by the Method 3 and Method 4,
+respectively. 
+
+In terms of detection rate, it is possible to see that Method 3 and Method 4
+surmount the Methods 1 and 2.  A closer look on these methods give us Table
+\ref{tab:meth_comp}, which compares relatively methods 3 and 4.
+
+\begin{table}[]
+\centering
+\caption{Detection rate and time of Method 4 relatively to Method 3}
+\label{tab:meth_comp}
+\begin{tabular}{l|ccccccc|}
+\cline{2-8}
+                                                                                              & \multicolumn{7}{c|}{\textbf{Scale}}                                                                                                                                                   \\
+                                                                                              & \textbf{0.05}              & \textbf{0.1}              & \textbf{0.2}              & \textbf{0.3}              & \textbf{0.4}              & \textbf{0.5}              & \textbf{1.0} \\ \hline
+\multicolumn{1}{|l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Detection \\ Rate (\%)\end{tabular}}} & \multicolumn{1}{c|}{-11,7} & \multicolumn{1}{c|}{10,0} & \multicolumn{1}{c|}{5,8}  & \multicolumn{1}{c|}{7,4}  & \multicolumn{1}{c|}{6,5}  & \multicolumn{1}{c|}{2,9}  & 0.82      \\ \hline
+\multicolumn{1}{|l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Detection \\ Time (\%)\end{tabular}}} & \multicolumn{1}{c|}{13,5}  & \multicolumn{1}{c|}{16,7} & \multicolumn{1}{c|}{32,9} & \multicolumn{1}{c|}{28,1} & \multicolumn{1}{c|}{33,4} & \multicolumn{1}{c|}{40,7} & 46.62       \\ \hline
+\end{tabular}
+\end{table}
+
+Images with small resolution affects the pose estimation accuracy. Thus, we
+will take the bigger resolution in which we have a reasonable time for the
+visual servoing task for comparison. On that case we decided to use the scale
+factor of 0.4, which causes the image resolution to be 816x816 and feed the
+visual controller at 6.25Hz.
+
+At this scale factor, the Method 4 improves the detection rate of 6.45\% in
+terms of detection rate, but it comes with the cost of an increase of 33.44\%
+in the average detection time. Thus, we will prefer to use Method 3 instead of
+Method 4.
+
+\subsection{Visual servoing performance}
+
+The vehicle was moved to the front of the marker and waited for a stable
+detection before starts the visual servoing task.  However, due to the poor
+visibility on the day, the Apriltags marker was not able to detect any marker,
+which invalidated the visual servoing without any pre-processing.  After enable
+applying Method 3, the marker detection started and allowed a visual servoing
+mission.  The results of the visual servoing are shown in Figures
+\ref{fig:vs_surge} to \ref{fig:vs_yaw}.
+
+This clearly show the improvement caused by the treatment of the image before
+running the visual servoing mission. In that case, specifically, the visual
+servoing was not be possible by using only the grayscale image. So it improved
+from a state of no-operation to a regular mission.
+
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.49\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/vs_surge.pdf}
+    \caption{Visual servoing performance in surge}
+	\label{fig:vs_surge}
+\end{figure}
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.49\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/vs_sway.pdf}
+    \caption{Visual servoing performance in sway}
+	\label{fig:vs_sway}
+\end{figure}
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.49\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/vs_heave.pdf}
+    \caption{Visual servoing performance in heave}
+	\label{fig:vs_heave}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.49\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/vs_yaw.pdf}
+    \caption{Visual servoing performance in yaw}
+	\label{fig:vs_yaw}
+\end{figure}
+
+Lately, the methods was once again applied to a log data. The results are shown
+in Figures \ref{fig:detection_rate2} and \ref{fig:detection_time2}. It shows
+the inability of the marker detector to detect markers under Method 1 and
+Method 2. On the other hand, Methods 3 and 4 were able to detect most of the
+8956 frames contained in the log file. 
+
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_rate2.pdf}
+    \caption{Relation between detection rate, pre-processing method and image size}
+	\label{fig:detection_rate2}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+    \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_time2.pdf}
+    \caption{Relation between average processing time, pre-processing method and image size}
+	\label{fig:processing_time2}
+\end{figure}
+
+\section{Conclusion} \label{sec:concl}
+
+On this paper we briefly presented the concepts and challenges of underwater
+image formation. It also was presented three methods to improve the underwater
+image aiming to increase the detection rate of artificial fiducial markers.
+Since the purpose of the detection is to feed a visual controller for visual
+servoing task, the time for detection is also observed.
+
+The results showed that simply applying a local contrast enhancement on the
+image increases significantly the detection rate. A method based on Iqbal's
+paper is also applied. Although the Iqbal's based-method increases the
+detection rate, the processing time increases in a higher proportion, which
+caused its use not be the preferable for the visual servoing, when compared to
+Method 3.
+
+We also have seen that, due to the underwater image quality, the marker
+detector was not able to feed the visual controller using raw image. On the
+other hand, using Method 3, the marker detector found several images and
+performed visual servoing normally. This result shows the proposed methods not
+only increases the visual controller frequency, by the improvement of the
+detection rate, but also makes the visual servoing possible when the image
+quality is not favorable.
 
 % use section* for acknowledgment
 \section*{Acknowledgment}
 
-
-The authors would like to thank...
-
-
-
-
+The authors would like to thank all involved colleagues at SENAI CIMATEC for
+the support. This work is part of the FlatFish project, which is funded by
+Shell, the Brazilian Industrial Research and Innovation Corporation (EMBRAPII)
+and the Brazilian National Agency of Petroleum (ANP).
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
@@ -552,25 +750,9 @@ The authors would like to thank...
 % http://mirror.ctan.org/biblio/bibtex/contrib/doc/
 % The IEEEtran BibTeX style support page is at:
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
+\bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
-
-
-
+\bibliography{IEEEabrv,./bib/ref.bib}
 
 % that's all folks
 \end{document}
-
-
