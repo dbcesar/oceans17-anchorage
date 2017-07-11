@@ -429,10 +429,8 @@ direction of the light. It directly affects visibility, that is the range at
 which objects can be seen, which can vary
 from twenty up to five meters or even less \cite{Schettini2010}. Light
 attenuation is not caused only by light propagation in the water medium, but
-%% SJ: "dissolved particles" does not mean anything. A particle is always
-%% SJ: floating. A compound such as salt can "dissolve"
-also due to dissolved and floating particles in the water. These
-interactions increase absorption and scattering effects.
+also due to floating particles in the water. These interactions increase
+absorption and scattering effects.
 
 Thus, several works have been published aiming to make underwater images more
 comprehensible to humans and even for machines, since it would permit the use
@@ -539,7 +537,7 @@ observed how this affected the processing time. Acquired image resolution was
 
 \subsection{Methods}
 
-We will now describe the evaluated pre-processing algorithms 
+We will now describe the evaluated pre-processing algorithms.
 
 Method 1 converts the raw image to grayscale
 before sending it to the Apriltag detector. Method 2 adds a stage of
@@ -552,10 +550,9 @@ also performed locally using CLAHE, as opposed to the method proposed by
 the authors.
 
 Figure \ref{fig:methods_flow} shows a diagram with the different processing
-pipelines, from the camera to the marker detector.
-
-%% SJ: you must put the hardware used for performance comparison (type of CPU,
-%% SJ: frequency, amount of memory, ...
+pipelines, from the camera to the marker detector. The algorithms ran on a 
+Linux Mint 18 Cinnamon 64-bit machine, Intel Core i7-3540M CPU @ 3.00GHz x 2,
+memory RAM of 15.6 Gb and a NVIDIA GF108GLM (NVS 5200M) graphics card.
 
 \begin{figure}[!htpb]
     \centering
@@ -573,12 +570,9 @@ without pre-processing. The performance of both setups were then compared.
 
 \section{Results and Discussion} \label{sec:results}
 
+\subsection{Pre-processing methods analysis}
 The results of the marker detector running through a camera log file with 32613
 frames are shown here. It is important to note that not all the frames
-%% SJ: So what are the detection rates ? Are they over the whole stream,
-%% SJ: or only the images with markers ? The latter would IMO be better. In any
-%% SJ: case, you really should put an idea of the ratio between "images with
-%% SJ: markers" and "images without markers"
 contained a visible marker. Figure \ref{fig:detection_rate} shows the detection
 rate of the markers under different pre-processing algorithms and with
 different image scales. 
@@ -586,11 +580,7 @@ different image scales.
 \begin{figure}[!ht]
 	\centering
     \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_rate_emb.pdf}
-    %% SJ: THese are not detection rates, they are a number of frames with detected
-    %% SJ: marker
-    %%
-    %% SJ: and ... error bars. Oh my god. Error bars !
-    \caption{Relation between detection rate, pre-processing method and image size.}
+    \caption{Relation between detected frames, pre-processing method and image size.}
 	\label{fig:detection_rate}
 \end{figure}
 
@@ -616,10 +606,7 @@ the studied methods.
     \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_time_emb.pdf}
     \caption{Relation between average processing time, pre-processing method and image size.}
 	\label{fig:processing_time}
-    %% SJ: Error bars. Oh my god. Error bars !
 \end{figure}
-
-%% SJ: detection times are in what unit ?????
 
 As expected, processing time increases with image size. Since Method 1
 does not have a pre-processing stage, it has the fastest detection time. Method
@@ -630,7 +617,6 @@ detection rates comparable to Methods 3 and 4, Methods 3 and 4
 are clear winners in practice. Methods 3 and 4 detection rates vs. processing
 times are detailed on \ref{tab:meth_comp}.
 
-%% SJ: Standard deviations !!!!!!!
 \begin{table}[]
 \centering
 \caption{Detection rate and time of Method 4 relatively to Method 3}
@@ -654,16 +640,7 @@ At this scale factor, Method 4 improves the detection rate in 6.45\%, but it
 comes with the cost of an increase of 33.44\% in average detection time. Thus,
 we prefer to use Method 3 instead of Method 4.
 
-%% SJ: this is the only subsection in this section. Create one for the first
-%% SJ: part ?
 \subsection{Visual servoing performance}
-
-%% SJ: honestly, I would have rewritten the whole as "test of pre-processing
-%% SJ: method", mentioning in the test that the initial goal was a comparison
-%% SJ: but that the detector without preprocessing just didn't detect anything
-%% SJ: on that day
-%%
-%% SJ: the current text sounds a bit silly.
 
 The vehicle was moved to the front of the marker and waited for a stable
 detection before starting the visual servoing task. However, due to the poor
@@ -672,10 +649,6 @@ which invalidated the visual servoing without any pre-processing. After it was
 able to apply Method 3, the marker detection started and allowed a visual
 servoing mission. The results of the visual servoing are shown in Figures
 \ref{fig:vs_surge} to \ref{fig:vs_yaw}.
-
-%% SJ: Same scale on both detectors ? If yes, I find that a bit ... weak. you
-%% SJ: Given that the performance of the "no preprocessing" detector degrades
-%% SJ: a lot less with scale, you could have used a much bigger image.
 
 This clearly shows the improvement caused by image treatment before
 running the visual servoing mission. In that case, specifically, the visual
@@ -717,7 +690,7 @@ Method 2. On the other hand, Methods 3 and 4 were able to detect most of the
 \begin{figure}[!ht]
 	\centering
     \includegraphics[width=0.4\textwidth, trim={1.6cm 6.9cm 2.3cm 6.7cm}]{./fig/detection_rate2_emb.pdf}
-    \caption{Relation between detection rate, pre-processing method and image size.}
+    \caption{Relation between detected frames, pre-processing method and image size.}
 	\label{fig:detection_rate2}
 \end{figure}
 
@@ -765,7 +738,7 @@ and the Brazilian National Agency of Petroleum (ANP).
 % the document is modified later
 % The "triggered" command can be changed if desired:
 %\IEEEtriggercmd{\enlargethispage{-1000mm}}
-\IEEEtriggeratref{4}
+%\IEEEtriggeratref{4}
 
 % references section
 
